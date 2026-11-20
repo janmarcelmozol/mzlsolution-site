@@ -144,6 +144,28 @@ footer{background:#000;color:#94a3b8;padding:36px 0;font-size:14px}
 .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
 
+.chat-btn{position:fixed;right:20px;bottom:20px;z-index:70;display:flex;align-items:center;gap:10px;background:var(--cyan);color:var(--navy);border:0;border-radius:999px;padding:14px 20px;font:600 15px Inter,system-ui,sans-serif;cursor:pointer;box-shadow:0 12px 30px -8px rgba(0,0,0,.45);transition:.2s}
+.chat-btn:hover{transform:translateY(-2px)}
+.chat-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.chat-panel{position:fixed;right:20px;bottom:20px;z-index:80;width:380px;max-width:calc(100vw - 32px);height:560px;max-height:calc(100vh - 40px);background:#fff;border-radius:20px;box-shadow:0 24px 60px -12px rgba(0,0,0,.45);display:none;flex-direction:column;overflow:hidden;border:1px solid var(--line)}
+.chat-panel.open{display:flex}
+.chat-head{background:var(--navy);color:#fff;padding:16px 18px;display:flex;align-items:center;gap:12px}
+.chat-head .dot{width:38px;height:38px;border-radius:50%;background:rgba(34,197,94,.18);display:grid;place-items:center;color:var(--cyan);font-weight:800}
+.chat-head b{display:block;font-size:15px}
+.chat-head small{color:#9ca3af;font-size:12.5px}
+.chat-close{margin-left:auto;background:none;border:0;color:#cbd5e1;font-size:24px;cursor:pointer;line-height:1}
+.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:var(--bg-soft)}
+.msg{max-width:85%;padding:10px 14px;border-radius:16px;font-size:14.5px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.msg.bot{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.user{background:var(--navy);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.msg.typing{color:var(--muted);font-style:italic}
+.chat-form{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);background:#fff}
+.chat-form textarea{flex:1;resize:none;min-height:44px;max-height:110px;padding:11px 12px;border-radius:12px;font-size:14.5px}
+.chat-form button{background:var(--cyan);color:var(--navy);border:0;border-radius:12px;padding:0 16px;font-weight:700;cursor:pointer}
+.chat-form button:disabled{opacity:.5;cursor:default}
+.chat-note{font-size:11.5px;color:var(--muted);text-align:center;padding:0 12px 10px;background:#fff}
+@media (max-width:720px){.chat-panel{right:0;bottom:0;width:100vw;max-width:100vw;height:100%;max-height:100%;border-radius:0}.chat-btn span{display:none}.chat-btn{padding:16px}}
+
 @media (max-width:1000px){
   .grid,.clients-grid{grid-template-columns:1fr 1fr}
 }
@@ -342,7 +364,6 @@ footer{background:#000;color:#94a3b8;padding:36px 0;font-size:14px}
       <div class="channels">
         <a class="channel" href="mailto:mzl@mzlsolution.com"><span style="font-size:26px">✉️</span><div><small>Email</small><strong>mzl@mzlsolution.com</strong></div></a>
         <a class="channel" href="tel:+13213522627"><span style="font-size:26px">📞</span><div><small>Phone</small><strong>(321) 352-2627</strong></div></a>
-        <a class="channel js-wa" href="#"><span style="font-size:26px">💬</span><div><small>WhatsApp</small><strong class="js-wa-label">Message us</strong></div></a>
       </div>
     </div>
     <form id="lead-form" action="send.php" method="post">
@@ -388,16 +409,24 @@ footer{background:#000;color:#94a3b8;padding:36px 0;font-size:14px}
 </footer>
 
 
-<script>
-// ===== CONFIG: WhatsApp number (country code + number, digits only) =====
-const WHATSAPP = "13213522627";
-const WA_LABEL = "+1 (321) 352-2627";
-// =========================================================================
+<button class="chat-btn" id="chat-open" aria-label="Chat with us">
+  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Chat with us</span>
+</button>
+<div class="chat-panel" id="chat-panel" role="dialog" aria-label="Chat with MZL Solution">
+  <div class="chat-head">
+    <div class="dot">M</div>
+    <div><b>MZL Solution Assistant</b><small>AI assistant · here to help</small></div>
+    <button class="chat-close" id="chat-close" aria-label="Close chat">×</button>
+  </div>
+  <div class="chat-body" id="chat-body"></div>
+  <form class="chat-form" id="chat-form">
+    <textarea id="chat-input" rows="1" maxlength="1200" placeholder="Tell us what's going on..." aria-label="Your message"></textarea>
+    <button type="submit" id="chat-send">Send</button>
+  </form>
+  <div class="chat-note">AI assistant. Please don't share passwords or payment info. For urgent help call (321) 352-2627.</div>
+</div>
 
-const waLink = (msg) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
-const defaultMsg = "Hi MZL Solution! I found you through your website and would like to request a technician.";
-document.querySelectorAll(".js-wa").forEach(a => { a.href = waLink(defaultMsg); a.target = "_blank"; a.rel = "noopener"; });
-document.querySelectorAll(".js-wa-label").forEach(el => el.textContent = WA_LABEL);
+<script>
 document.querySelectorAll(".js-partner").forEach(a => a.addEventListener("click", () => {
   const s = document.querySelector('select[name="type"]'); if (s) s.value = "Subcontract partnership";
 }));
@@ -418,6 +447,42 @@ document.getElementById("lead-form").addEventListener("submit", async e => {
   }
   btn.disabled = false; btn.textContent = "Send Request";
 });
+// ===== AI chat widget =====
+(() => {
+  const panel = document.getElementById("chat-panel"), body = document.getElementById("chat-body");
+  const form = document.getElementById("chat-form"), input = document.getElementById("chat-input"), send = document.getElementById("chat-send");
+  const openBtn = document.getElementById("chat-open");
+  const GREETING = "Hi there! I'm the MZL Solution virtual assistant. Tell me what's going on with your network, phones, cameras or IT, and I'll help you figure out the next step.";
+  let history = [];
+  try { history = JSON.parse(sessionStorage.getItem("mzl-chat") || "[]"); } catch (e) { history = []; }
+  const save = () => { try { sessionStorage.setItem("mzl-chat", JSON.stringify(history.slice(-20))); } catch (e) {} };
+  const add = (role, text, extra) => {
+    const d = document.createElement("div");
+    d.className = "msg " + (role === "user" ? "user" : "bot") + (extra ? " " + extra : "");
+    d.textContent = text; body.appendChild(d); body.scrollTop = body.scrollHeight; return d;
+  };
+  const render = () => { body.innerHTML = ""; add("assistant", GREETING); history.forEach(m => add(m.role, m.content)); };
+  render();
+  openBtn.addEventListener("click", () => { panel.classList.add("open"); openBtn.style.display = "none"; setTimeout(() => input.focus(), 50); });
+  document.getElementById("chat-close").addEventListener("click", () => { panel.classList.remove("open"); openBtn.style.display = ""; });
+  input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); form.requestSubmit(); } });
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const text = input.value.trim(); if (!text || send.disabled) return;
+    if (history.length >= 20) { add("assistant", "We've covered a lot! For the next step, please use the contact form below or email mzl@mzlsolution.com, and our team will follow up personally."); return; }
+    input.value = ""; add("user", text); history.push({ role: "user", content: text }); save();
+    send.disabled = true; const typing = add("assistant", "Typing...", "typing");
+    try {
+      const res = await fetch("chat.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages: history }) });
+      const data = await res.json();
+      typing.remove(); add("assistant", data.reply);
+      if (data.ok) { history.push({ role: "assistant", content: data.reply }); save(); }
+    } catch (err) {
+      typing.remove(); add("assistant", "Sorry, I couldn't connect. Please email mzl@mzlsolution.com or call (321) 352-2627.");
+    }
+    send.disabled = false; input.focus();
+  });
+})();
 </script>
 </body>
 </html>
