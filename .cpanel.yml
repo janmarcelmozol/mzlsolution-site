@@ -2,7 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home1/janmar94/public_html/
-    - /bin/cp index.html $DEPLOYPATH
-    - /bin/cp favicon.svg $DEPLOYPATH
-    - /bin/cp robots.txt $DEPLOYPATH
-    - /bin/cp sitemap.xml $DEPLOYPATH
+    - /bin/cp -a public/. $DEPLOYPATH

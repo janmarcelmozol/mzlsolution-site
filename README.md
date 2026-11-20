@@ -1,6 +1,15 @@
 # MZL Solution — company website
 
-Static website (plain HTML/CSS/JS) for **mzlsolution.com**, built to bring in clients through WhatsApp and email.
+Website for **mzlsolution.com** (IT Field Services & Infrastructure, Florida). Files served from `public/` on HostGator.
+
+## Deployment
+A cPanel cron job pulls this repo every 5 minutes and copies `public/` to `public_html`:
+
+```
+cd /home1/janmar94/repositories/mzlsolution-site && PATH=/usr/local/cpanel/3rdparty/bin:$PATH git pull -q origin main && cp -a public/. /home1/janmar94/public_html/ >/dev/null 2>&1
+```
+
+The contact form posts to `public/send.php`, which emails requests to mzl@mzlsolution.com.
 
 ## Configuration
 In `index.html`, near the end of the file (`CONFIG` block):

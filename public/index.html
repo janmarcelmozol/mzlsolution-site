@@ -143,9 +143,6 @@ form .btn{justify-content:center;width:100%}
 footer{background:#000;color:#94a3b8;padding:36px 0;font-size:14px}
 .foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 
-.wa-float{position:fixed;right:20px;bottom:20px;z-index:60;width:60px;height:60px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px -8px rgba(0,0,0,.4);transition:.2s}
-.wa-float:hover{transform:scale(1.07)}
-.wa-float svg{width:32px;height:32px;fill:#fff}
 
 @media (max-width:1000px){
   .grid,.clients-grid{grid-template-columns:1fr 1fr}
@@ -290,7 +287,7 @@ footer{background:#000;color:#94a3b8;padding:36px 0;font-size:14px}
     <h2>From work order to closeout</h2>
     <p class="lead">A simple, documented process that keeps you and your end customer informed.</p>
     <div class="steps">
-      <div class="step"><h3>Work order</h3><p>Send the scope, site address and preferred date by email, WhatsApp or your platform.</p></div>
+      <div class="step"><h3>Work order</h3><p>Send the scope, site address and preferred date by email, phone or your platform.</p></div>
       <div class="step"><h3>Confirm &amp; schedule</h3><p>We confirm availability, requirements and on-site contact before the visit.</p></div>
       <div class="step"><h3>On-site execution</h3><p>Check-in on arrival, work performed to your scope and SOW, live updates if anything changes.</p></div>
       <div class="step"><h3>Closeout</h3><p>Check-out with photos, notes and customer sign-off so you can close the ticket.</p></div>
@@ -331,7 +328,7 @@ footer{background:#000;color:#94a3b8;padding:36px 0;font-size:14px}
       <details><summary>Do you work as a subcontractor or white-label?</summary><p>Yes. We regularly support MSPs, integrators and field service platforms, and we represent your company on site.</p></details>
       <details><summary>Can you work through Field Nation or WorkMarket?</summary><p>Yes. We accept work orders through Field Nation and WorkMarket, as well as direct subcontract agreements.</p></details>
       <details><summary>Are you insured?</summary><p>Yes. We carry General Liability insurance of $1,000,000 per occurrence and $2,000,000 aggregate. A certificate of insurance and W-9 are available on request.</p></details>
-      <details><summary>How do I request a technician?</summary><p>Use the form below, WhatsApp or email with the scope, site address and preferred date. We'll confirm availability quickly.</p></details>
+      <details><summary>How do I request a technician?</summary><p>Use the form below, email or phone with the scope, site address and preferred date. We'll confirm availability quickly.</p></details>
     </div>
   </div>
 </section>
@@ -343,19 +340,21 @@ footer{background:#000;color:#94a3b8;padding:36px 0;font-size:14px}
       <h2>Need a tech on site? Let's talk.</h2>
       <p class="lead">Send us a work order or a partnership inquiry. We'll get back to you as soon as possible.</p>
       <div class="channels">
-        <a class="channel js-wa" href="#"><span style="font-size:26px">💬</span><div><small>WhatsApp</small><strong class="js-wa-label">Message us</strong></div></a>
         <a class="channel" href="mailto:mzl@mzlsolution.com"><span style="font-size:26px">✉️</span><div><small>Email</small><strong>mzl@mzlsolution.com</strong></div></a>
         <a class="channel" href="tel:+13213522627"><span style="font-size:26px">📞</span><div><small>Phone</small><strong>(321) 352-2627</strong></div></a>
+        <a class="channel js-wa" href="#"><span style="font-size:26px">💬</span><div><small>WhatsApp</small><strong class="js-wa-label">Message us</strong></div></a>
       </div>
     </div>
-    <form id="lead-form">
+    <form id="lead-form" action="send.php" method="post">
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;opacity:0">
+      <input type="hidden" name="ts" id="ts">
       <div class="row">
         <label>Name<input name="name" required autocomplete="name"></label>
         <label>Company<input name="company" autocomplete="organization"></label>
       </div>
       <div class="row">
-        <label>Phone / WhatsApp<input name="phone" type="tel" required autocomplete="tel"></label>
-        <label>Email<input name="email" type="email" autocomplete="email"></label>
+        <label>Email<input name="email" type="email" required autocomplete="email"></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel"></label>
       </div>
       <div class="row">
         <label>Request type
@@ -374,8 +373,8 @@ footer{background:#000;color:#94a3b8;padding:36px 0;font-size:14px}
         <label>Preferred date<input name="date" type="date"></label>
       </div>
       <label>Scope / details<textarea name="message" placeholder="Briefly describe the work needed"></textarea></label>
-      <button class="btn btn-primary" type="submit">Send via WhatsApp</button>
-      <p class="note">Submitting opens a WhatsApp chat with your request ready to send.</p>
+      <button class="btn btn-primary" type="submit" id="submit-btn">Send Request</button>
+      <p class="note" id="form-note">Your request goes straight to our inbox. We usually reply the same business day.</p>
     </form>
   </div>
 </section>
@@ -388,9 +387,6 @@ footer{background:#000;color:#94a3b8;padding:36px 0;font-size:14px}
   </div>
 </footer>
 
-<a href="#" class="wa-float js-wa" aria-label="Chat on WhatsApp">
-  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3z"/></svg>
-</a>
 
 <script>
 // ===== CONFIG: WhatsApp number (country code + number, digits only) =====
@@ -407,22 +403,20 @@ document.querySelectorAll(".js-partner").forEach(a => a.addEventListener("click"
 }));
 document.getElementById("y").textContent = new Date().getFullYear();
 
-document.getElementById("lead-form").addEventListener("submit", e => {
+document.getElementById("ts").value = Math.floor(Date.now() / 1000);
+document.getElementById("lead-form").addEventListener("submit", async e => {
   e.preventDefault();
-  const f = new FormData(e.target);
-  const msg = [
-    "Hi MZL Solution! I found you through your website.",
-    `Name: ${f.get("name")}`,
-    f.get("company") && `Company: ${f.get("company")}`,
-    `Phone: ${f.get("phone")}`,
-    f.get("email") && `Email: ${f.get("email")}`,
-    `Request: ${f.get("type")}`,
-    `Service: ${f.get("service")}`,
-    f.get("city") && `Site city: ${f.get("city")}`,
-    f.get("date") && `Preferred date: ${f.get("date")}`,
-    f.get("message") && `Scope: ${f.get("message")}`
-  ].filter(Boolean).join("\n");
-  window.open(waLink(msg), "_blank", "noopener");
+  const form = e.target, btn = document.getElementById("submit-btn"), note = document.getElementById("form-note");
+  btn.disabled = true; btn.textContent = "Sending...";
+  try {
+    const res = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { "Accept": "application/json" } });
+    const data = await res.json();
+    if (data.ok) { window.location.href = "thanks.html"; return; }
+    note.textContent = data.message; note.style.color = "#b91c1c";
+  } catch (err) {
+    note.textContent = "Sorry, something went wrong. Please email mzl@mzlsolution.com or call (321) 352-2627."; note.style.color = "#b91c1c";
+  }
+  btn.disabled = false; btn.textContent = "Send Request";
 });
 </script>
 </body>
