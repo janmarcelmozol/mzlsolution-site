@@ -25,7 +25,7 @@
   "url": "https://mzlsolution.com",
   "logo": "https://mzlsolution.com/favicon.svg",
   "email": "mzl@mzlsolution.com",
-  "telephone": "+1-321-352-2627",
+  "telephone": "+1-645-999-1556",
   "description": "IT field services and infrastructure: smart hands, structured cabling, networking, servers, VoIP, CCTV and paging systems across Florida.",
   "address": {"@type": "PostalAddress", "addressLocality": "Orlando", "addressRegion": "FL", "postalCode": "32832", "addressCountry": "US"},
   "areaServed": {"@type": "State", "name": "Florida"},
@@ -363,7 +363,7 @@ footer{background:#000;color:#94a3b8;padding:36px 0;font-size:14px}
       <p class="lead">Send us a work order or a partnership inquiry. We'll get back to you as soon as possible.</p>
       <div class="channels">
         <a class="channel" href="mailto:mzl@mzlsolution.com"><span style="font-size:26px">✉️</span><div><small>Email</small><strong>mzl@mzlsolution.com</strong></div></a>
-        <a class="channel" href="tel:+13213522627"><span style="font-size:26px">📞</span><div><small>Phone</small><strong>(321) 352-2627</strong></div></a>
+        <a class="channel" href="tel:+16459991556"><span style="font-size:26px">📞</span><div><small>Phone</small><strong>(645) 999-1556</strong></div></a>
       </div>
     </div>
     <form id="lead-form" action="send.php" method="post">
@@ -423,7 +423,7 @@ footer{background:#000;color:#94a3b8;padding:36px 0;font-size:14px}
     <textarea id="chat-input" rows="1" maxlength="1200" placeholder="Tell us what's going on..." aria-label="Your message"></textarea>
     <button type="submit" id="chat-send">Send</button>
   </form>
-  <div class="chat-note">AI assistant. Please don't share passwords or payment info. For urgent help call (321) 352-2627.</div>
+  <div class="chat-note">AI assistant. Please don't share passwords or payment info. For urgent help call (645) 999-1556.</div>
 </div>
 
 <script>
@@ -443,7 +443,7 @@ document.getElementById("lead-form").addEventListener("submit", async e => {
     if (data.ok) { window.location.href = "thanks.html"; return; }
     note.textContent = data.message; note.style.color = "#b91c1c";
   } catch (err) {
-    note.textContent = "Sorry, something went wrong. Please email mzl@mzlsolution.com or call (321) 352-2627."; note.style.color = "#b91c1c";
+    note.textContent = "Sorry, something went wrong. Please email mzl@mzlsolution.com or call (645) 999-1556."; note.style.color = "#b91c1c";
   }
   btn.disabled = false; btn.textContent = "Send Request";
 });
@@ -478,7 +478,7 @@ document.getElementById("lead-form").addEventListener("submit", async e => {
       typing.remove(); add("assistant", data.reply);
       if (data.ok) { history.push({ role: "assistant", content: data.reply }); save(); }
     } catch (err) {
-      typing.remove(); add("assistant", "Sorry, I couldn't connect. Please email mzl@mzlsolution.com or call (321) 352-2627.");
+      typing.remove(); add("assistant", "Sorry, I couldn't connect. Please email mzl@mzlsolution.com or call (645) 999-1556.");
     }
     send.disabled = false; input.focus();
   });

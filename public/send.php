@@ -85,4 +85,4 @@ $sent = mail($TO, $encodedSubject, $body, $headers, '-f' . $FROM);
 if ($sent) {
     respond(true, 'Thank you! Your request was sent. We will get back to you shortly.', $wantsJson);
 }
-respond(false, 'Sorry, something went wrong. Please email us at mzl@mzlsolution.com or call (321) 352-2627.', $wantsJson);
+respond(false, 'Sorry, something went wrong. Please email us at mzl@mzlsolution.com or call (645) 999-1556.', $wantsJson);

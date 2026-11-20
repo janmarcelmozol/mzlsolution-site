@@ -21,7 +21,7 @@ function reply(int $status, array $data): void {
     exit;
 }
 
-const FRIENDLY_ERROR = "Sorry, I'm having trouble connecting right now. Please reach our team at mzl@mzlsolution.com or call (321) 352-2627, we'll be glad to help.";
+const FRIENDLY_ERROR = "Sorry, I'm having trouble connecting right now. Please reach our team at mzl@mzlsolution.com or call (645) 999-1556, we'll be glad to help.";
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     reply(405, ['ok' => false, 'reply' => 'Method not allowed.']);
@@ -98,7 +98,7 @@ You are the virtual assistant on the website of MZL Solution LLC, an IT field se
 Your role:
 - Welcome visitors warmly, listen to their technology problem, and make them feel heard and reassured. Many people arrive stressed because something stopped working; acknowledge that first in a natural, human way ("That sounds frustrating, let's figure it out together.").
 - Help them understand what might be going on and offer simple, safe first steps they can try themselves (restart the device, check cables and lights, confirm power, check if others are affected, note error messages).
-- When the problem needs hands-on work, or the safe steps don't solve it, guide them to request a technician through the contact form on this page, by email at mzl@mzlsolution.com, or by phone at (321) 352-2627. Mention it naturally, not in every message.
+- When the problem needs hands-on work, or the safe steps don't solve it, guide them to request a technician through the contact form on this page, by email at mzl@mzlsolution.com, or by phone at (645) 999-1556. Mention it naturally, not in every message.
 
 What MZL Solution does: on-site field services and smart hands, structured cabling (Cat5e, Cat6, fiber), networking and Wi-Fi, servers and infrastructure (rack and stack, virtualization, backups), business VoIP and phone lines, CCTV/IP camera systems, commercial paging systems, and Tier 1-2 help desk support. Clients include MSPs and IT providers, field service platforms (Field Nation, WorkMarket), telecom/ISPs and integrators, and businesses such as medical offices, HOAs, retail and corporate offices. The company has more than 25 years of hands-on experience and carries General Liability insurance ($1M per occurrence / $2M aggregate).
 
@@ -132,7 +132,7 @@ try {
     );
 
     if ($message->stopReason === 'refusal') {
-        reply(200, ['ok' => true, 'reply' => "I'm not able to help with that here, but our team is happy to talk with you directly at mzl@mzlsolution.com or (321) 352-2627."]);
+        reply(200, ['ok' => true, 'reply' => "I'm not able to help with that here, but our team is happy to talk with you directly at mzl@mzlsolution.com or (645) 999-1556."]);
     }
 
     $text = '';
@@ -144,7 +144,7 @@ try {
 
     reply(200, ['ok' => true, 'reply' => $text]);
 } catch (\Anthropic\Core\Exceptions\RateLimitException $e) {
-    reply(429, ['ok' => false, 'reply' => "I'm a bit busy at the moment. Please try again in a minute, or reach our team at mzl@mzlsolution.com or (321) 352-2627."]);
+    reply(429, ['ok' => false, 'reply' => "I'm a bit busy at the moment. Please try again in a minute, or reach our team at mzl@mzlsolution.com or (645) 999-1556."]);
 } catch (\Anthropic\Core\Exceptions\APIConnectionException $e) {
     reply(502, ['ok' => false, 'reply' => FRIENDLY_ERROR]);
 } catch (\Anthropic\Core\Exceptions\APIStatusException $e) {
