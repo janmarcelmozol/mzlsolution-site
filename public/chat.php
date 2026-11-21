@@ -23,6 +23,22 @@ function reply(int $status, array $data): void {
 
 const FRIENDLY_ERROR = "Sorry, I'm having trouble connecting right now. Please reach our team at mzl@mzlsolution.com or call (645) 999-1556, we'll be glad to help.";
 
+// Health check (no secrets): /chat.php?status=1
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'GET' && isset($_GET['status'])) {
+    $sdk = is_file(HOME_DIR . '/repositories/mzlsolution-site/server/vendor/autoload.php') || is_file(__DIR__ . '/../server/vendor/autoload.php');
+    $cfg = is_file(HOME_DIR . '/mzl-chat-config.php');
+    $key = false;
+    if ($cfg) { $c = @include HOME_DIR . '/mzl-chat-config.php'; $k = is_array($c) ? (string)($c['anthropic_api_key'] ?? '') : ''; $key = strncmp($k, 'sk-ant-', 7) === 0; }
+    reply(200, [
+        'php_version' => PHP_VERSION,
+        'php_ok' => version_compare(PHP_VERSION, '8.1.0', '>='),
+        'curl' => function_exists('curl_init'),
+        'sdk_found' => $sdk,
+        'config_file_found' => $cfg,
+        'api_key_looks_valid' => $key || (bool)getenv('ANTHROPIC_API_KEY'),
+    ]);
+}
+
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     reply(405, ['ok' => false, 'reply' => 'Method not allowed.']);
 }
